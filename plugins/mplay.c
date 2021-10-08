@@ -709,13 +709,10 @@ static int mplayfamily_init(int (*init_receiver)(void), int baud)
 		result = 0;
 	}
 	/* Try to open serial port */
-	else if (result == 1) {
-		mplayfamily_local_data.fd =
-			 open(device, O_RDWR | O_NONBLOCK | O_NOCTTY);
-		if (mplayfamily_local_data.fd < 0) {
-			log_error("Could not open serial port '%s'", device);
-			result = 0;
-		}
+	else if (mplayfamily_local_data.fd =
+			 open(device, O_RDWR | O_NONBLOCK | O_NOCTTY) < 0) {
+        log_error("Could not open serial port '%s'", device);
+        result = 0;
 	}
 	/* Serial port configuration */
 	else if (!tty_reset(mplayfamily_local_data.fd) ||
