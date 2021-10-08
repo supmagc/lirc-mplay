@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#
+# lirc pre-commit hook: Check source formatting, last update: in manpages
+# and overall whitespace.
+
+function files_to_update()
+{
+    git diff --cached --name-status | grep -v ^D | awk '$1 $2 { print $2}'
+}
+
+
+here=$(dirname $(readlink -fn $0))
+
+C_SOURCES=( $( files_to_update | grep -E '\.c$|\.h$'))
+
+MAN_SOURCES=( $( files_to_update |  grep -E  '\.1$|\.4|\.5$|\.8$'))
+
+
+# See that C sources passes checkfile (i. e., checkpatch.pl)
+for f in ${C_SOURCES[@]} ; do
+    test -L $f && continue
+    if ! $here/checkfiles $f; then
+        echo "Checkpatch errors, fix them (or use --no-verify to commit anyway)."
+        exit 1
+    fi
+done
+
+# Check that Last Update: is sane in manpages.
+now=$( date +"%b %Y" )
+for f in ${MAN_SOURCES[@]} ; do
+    test -L $f && continue
+    sed  '/Last change:/s/:.*20../'": $now/" $f > $f.tmp
+    diff=$(diff -b -q $f $f.tmp)
+    if [ -n "$diff" ]; then
+        echo "Please update \"Last change\" in $f (or use --no-verify)"
+        rm $f.tmp
+	exit 1
+    else
+        rm $f.tmp
+    fi
+done
+
+# If there are whitespace errors, print the offending file names and fail.
+exec git diff-index --check --cached HEAD --

@@ -1,13 +1,19 @@
+__pycache__
+.pylint-stamp
 ircat
 irexec
+irpipe
 irpty
+irrecord
 irsend
+irsimsend
+irsimreceive
+irtestcase
 irw
 irxevent
-lircrcd
+lirc-lsplugins
+lirc-lsremotes
 mode2
-pronto2lirc
 xmode2
+config.py
 
-liblirc_client.la
-lirc_client.lo

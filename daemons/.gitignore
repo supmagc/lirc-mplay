@@ -1,6 +1,6 @@
-irrecord
 lircd
+lircrcd
 lircmd
 lircd.simrec
 lircd.simsend
-slinke
+lircd-uinput

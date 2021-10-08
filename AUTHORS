@@ -38,20 +38,17 @@ X Window system tools:
   Heinrich Langos  <heinrich@null.net>
   Heinrich Langos <heinrich@mad.scientist.com>
 
-smode2:
-  Sinkovics Zoltan <sinko@szarvas.hu>
-
 GPIO support:
   Artur Lipowski <alipowski@interia.pl>
 
 Slink-e support:
   Max Spring <mspring@employees.org>
-  
+
 Winfast TV2000:
   Juan Toledo <toledo@users.sourceforge.net>
 
 ITE IT8712/IT8705 CIR port:
-  Hans-Günter Lütke Uphues <hg_lu@web.de>
+  Hans-GÃ¼nter LÃ¼tke Uphues <hg_lu@web.de>
 
 Linksys NSLU2 Support and memory mapped I/O in serial driver:
   Matthias Goebl <matthias.goebl@goebl.net>

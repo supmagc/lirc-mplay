@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+here=$(dirname $(readlink -fn $0))
+
+for f in $@; do
+        uncrustify -c $here/../uncrustify.cfg -f $f -o $f
+done
