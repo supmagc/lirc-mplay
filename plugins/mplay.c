@@ -709,15 +709,20 @@ static int mplayfamily_init(int (*init_receiver)(void), int baud)
 		result = 0;
 	}
 	/* Try to open serial port */
-	else if (mplayfamily_local_data.fd =
-			 open(device, O_RDWR | O_NONBLOCK | O_NOCTTY) < 0) {
+	else if ((mplayfamily_local_data.fd =
+			 open(device, O_RDWR | O_NONBLOCK | O_NOCTTY)) < 0) {
         log_error("Could not open serial port '%s'", device);
         result = 0;
 	}
 	/* Serial port configuration */
-	else if (!tty_reset(mplayfamily_local_data.fd) ||
-		 !tty_setbaud(mplayfamily_local_data.fd, baud)) {
-		log_error("Couldn't configure serial port '%s'",
+	else if (!tty_reset(mplayfamily_local_data.fd)) {
+		log_error("Couldn't configure (reset) serial port '%s'",
+			  device);
+		result = 0;
+	}
+	/* Serial port configuration */
+	else if (!tty_setbaud(mplayfamily_local_data.fd, baud)) {
+		log_error("Couldn't configure (baudrate) serial port '%s'",
 			  device);
 		result = 0;
 	}
@@ -797,10 +802,10 @@ int mplayfamily_deinit(void)
 	}
 	if (drv.fd != -1) {
 		close(drv.fd);
-		tty_delete_lock();
 		drv.fd = -1;
 		mplayfamily_local_data.fd = -1;
 	}
+    tty_delete_lock();
 	return 1;
 }
 
