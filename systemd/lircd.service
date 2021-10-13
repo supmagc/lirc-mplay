@@ -7,7 +7,7 @@ After=network.target lircd-setup.service
 
 [Service]
 Type=notify
-ExecStart=/usr/sbin/lircd --nodaemon
+ExecStart=mkdir /var/run/lirc && /usr/sbin/lircd --nodaemon
 ; User=lirc
 ; Group=lirc
 
